@@ -26,16 +26,56 @@ const initialize = () => {
 }
 
 const showToy = toy => {
+  let thisToy = toy
   let toyDiv = document.createElement('div')
   // add class to class list array
   toyDiv.classList.add('card')
   toyDiv.innerHTML = `
     <h2>${toy.name}</h2>
     <img src=${toy.image} class="toy-avatar" />
-    <p>${toy.likes}</p>
-    <button class="like-btn">Like <3</button>`
+    <p>${toy.likes}</p>`
+  let deleteBtn = document.createElement('button')
+  deleteBtn.class = 'like-btn'
+  deleteBtn.innerText = 'Delete'
+  // deleteBtn.addEventListener('click', deleteToy(toy.id))
+  let likeBtn = document.createElement('button')
+  likeBtn.class = 'like-btn'
+  likeBtn.innerText = 'Like <3'
+  likeBtn.addEventListener('click', () => showLikes(thisToy))
+  toyDiv.append(likeBtn)
+  toyDiv.append(deleteBtn)
   toyCollection.append(toyDiv)
 }
+
+const showLikes = toy => {
+  // showToy(toy) this is where it will update on page
+  likeToy(toy)
+}
+
+const likeToy = toy => {
+  fetch(`http://localhost:3000/toys/${toy.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify({ likes: toy.likes++ })
+  }).then(resp => resp.json())
+}
+
+// const deleteToy = id => {
+//   fetch(`http://localhost:3000/toys/${id}`, {
+//     method: 'DELETE'
+//     // {
+//     //   headers: {
+//     //     'Content-Type': 'application/json',
+//     //     Accept: 'application/json'
+//     //   },
+//     //   body: JSON.stringify(toy)
+//     // }
+//   })
+//   // .then(resp => resp.json())
+// }
 
 createToyForm.addEventListener('submit', e => {
   e.preventDefault()
