@@ -13,3 +13,28 @@ addBtn.addEventListener('click', () => {
     toyForm.style.display = 'none'
   }
 })
+
+// if the <script> is at the top of the page, can use
+// document.addEventListener('DOMContentLoaded', () => {})
+// code goes here!
+
+const initialize = () => {
+  fetch('http://localhost:3000/toys')
+    .then(resp => resp.json())
+    // divide toys here
+    .then(toys => toys.forEach(showToy))
+}
+
+const showToy = toy => {
+  let toyDiv = document.createElement('div')
+  // add class to class list array
+  toyDiv.classList.add('card')
+  toyDiv.innerHTML = `
+    <h2>${toy.name}</h2>
+    <img src=${toy.image} class="toy-avatar" />
+    <p>${toy.likes}</p>
+    <button class="like-btn">Like <3</button>`
+  toyCollection.append(toyDiv)
+}
+
+initialize()
