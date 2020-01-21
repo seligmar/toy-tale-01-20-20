@@ -21,8 +21,20 @@ addBtn.addEventListener('click', () => {
 const initialize = () => {
   fetch('http://localhost:3000/toys')
     .then(resp => resp.json())
-    .then(showToy)
+    // divide toys here
+    .then(toys => toys.forEach(showToy))
 }
 
-const showToy = toy => {}
+const showToy = () => {
+  let toyDiv = document.createElement('div')
+  // add class to class list array
+  toyDiv.classList.add('card')
+  toyDiv.innerHTML = `
+    <h2></h2>
+    <img src='' class="toy-avatar" />
+    <p></p>
+    <button class="like-btn">Like <3</button>`
+  toyCollection.append(toyDiv)
+}
+
 initialize()
