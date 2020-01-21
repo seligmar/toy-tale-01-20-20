@@ -37,4 +37,35 @@ const showToy = toy => {
   toyCollection.append(toyDiv)
 }
 
+createToyForm.addEventListener('submit', e => {
+  e.preventDefault()
+  addNewToy(e)
+  createToyForm.reset()
+})
+
+const addNewToy = e => {
+  let newToy = {
+    name: e.target.name.value,
+    image: e.target.image.value,
+    likes: 0
+  }
+  createToy(newToy)
+}
+
+const createToy = toy => {
+  fetch('http://localhost:3000/toys', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify(toy)
+  })
+    .then(resp => resp.json())
+    .then(showToy(toy))
+}
+
+// call the initialize function at the end of the page- when the page loads
+// make the fetch request and start the js
+
 initialize()
