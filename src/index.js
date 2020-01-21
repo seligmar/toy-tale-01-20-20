@@ -25,14 +25,14 @@ const initialize = () => {
     .then(toys => toys.forEach(showToy))
 }
 
-const showToy = () => {
+const showToy = toy => {
   let toyDiv = document.createElement('div')
   // add class to class list array
   toyDiv.classList.add('card')
   toyDiv.innerHTML = `
-    <h2></h2>
-    <img src='' class="toy-avatar" />
-    <p></p>
+    <h2>${toy.name}</h2>
+    <img src=${toy.image} class="toy-avatar" />
+    <p>${toy.likes}</p>
     <button class="like-btn">Like <3</button>`
   toyCollection.append(toyDiv)
 }
