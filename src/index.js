@@ -14,4 +14,15 @@ addBtn.addEventListener('click', () => {
   }
 })
 
+// if the <script> is at the top of the page, can use
+// document.addEventListener('DOMContentLoaded', () => {})
 // code goes here!
+
+const initialize = () => {
+  fetch('http://localhost:3000/toys')
+    .then(resp => resp.json())
+    .then(showToy)
+}
+
+const showToy = toy => {}
+initialize()
