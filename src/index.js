@@ -40,6 +40,7 @@ const showToy = toy => {
 createToyForm.addEventListener('submit', e => {
   e.preventDefault()
   addNewToy(e)
+  createToyForm.reset()
 })
 
 const addNewToy = e => {
