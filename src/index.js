@@ -37,18 +37,19 @@ const showToy = toy => {
   let deleteBtn = document.createElement('button')
   deleteBtn.class = 'like-btn'
   deleteBtn.innerText = 'Delete'
-  // deleteBtn.addEventListener('click', deleteToy(toy.id))
+  deleteBtn.addEventListener('click', e => deleteToy(e, thisToy.id))
   let likeBtn = document.createElement('button')
   likeBtn.class = 'like-btn'
   likeBtn.innerText = 'Like <3'
-  likeBtn.addEventListener('click', () => showLikes(thisToy))
+  likeBtn.addEventListener('click', e => showLikes(e, thisToy))
   toyDiv.append(likeBtn)
   toyDiv.append(deleteBtn)
   toyCollection.append(toyDiv)
 }
 
-const showLikes = toy => {
-  // showToy(toy) this is where it will update on page
+const showLikes = (e, toy) => {
+  let num = parseInt(e.target.parentElement.children[2].innerText)
+  e.target.parentElement.children[2].innerText = num + 1
   likeToy(toy)
 }
 
@@ -63,19 +64,12 @@ const likeToy = toy => {
   }).then(resp => resp.json())
 }
 
-// const deleteToy = id => {
-//   fetch(`http://localhost:3000/toys/${id}`, {
-//     method: 'DELETE'
-//     // {
-//     //   headers: {
-//     //     'Content-Type': 'application/json',
-//     //     Accept: 'application/json'
-//     //   },
-//     //   body: JSON.stringify(toy)
-//     // }
-//   })
-//   // .then(resp => resp.json())
-// }
+const deleteToy = (e, id) => {
+  e.target.parentNode.remove()
+  fetch(`http://localhost:3000/toys/${id}`, {
+    method: 'DELETE'
+  }).then(resp => resp.json())
+}
 
 createToyForm.addEventListener('submit', e => {
   e.preventDefault()
