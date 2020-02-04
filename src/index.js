@@ -26,8 +26,10 @@ const showToy = toy => {
   toyCard.className = 'card'
   toyCard.innerHTML = `
   <h2>${toyNew.name}</h2>
-  <img src=${toyNew.image} class="toy-avatar" />
-  <p>${toyNew.likes} Likes </p>`
+  <img src=${toyNew.image} class="toy-avatar" />`
+  let likesP = document.createElement('p')
+  likesP.innerText = `${toyNew.likes} Likes`
+  toyCard.append(likesP)
   let likeBtn = document.createElement('button')
   likeBtn.className = 'like-btn'
   likeBtn.innerText = 'Like <3'
@@ -45,16 +47,18 @@ const increaseLikes = (e, toy) => {
       'Content-Type': 'application/json',
       Accept: 'application/json'
     },
-    body: JSON.stringify({ likes: toyLikes + 1 })
+    body: JSON.stringify({ likes: ++toyLikes })
   })
     .then(resp => resp.json())
     .then(showLikes(e))
 }
 
 const showLikes = e => {
-  // debugger
   e.preventDefault()
-  // debugger
+  // let num =  e.target.parentElement.children[2].innerText
+  let newNum =
+    parseInt(e.target.parentElement.children[2].innerText.split(' ')[0]) + 1
+  e.target.parentElement.children[2].innerText = `${newNum} Likes`
 }
 // // if the <script> is at the top of the page, can use
 // // document.addEventListener('DOMContentLoaded', () => {})
